@@ -2,7 +2,7 @@
 FROM python:bullseye
 
 RUN apt-get update -y && \
-    apt-get install build-essential cmake pkg-config -y \
+    apt-get install build-essential cmake pkg-config -y
 
 
 RUN pip install dlib
