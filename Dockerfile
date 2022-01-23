@@ -1,19 +1,11 @@
-
-FROM python:bullseye
-
-RUN apt-get update -y && \
-    apt-get install build-essential cmake pkg-config -y
-
-
-RUN pip install dlib
-
+FROM aaftio/face_recognition
 
 WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python3", "main.py"]
+CMD ["python", "main.py"]
