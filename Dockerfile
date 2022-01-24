@@ -1,4 +1,4 @@
-FROM aaftio/face_recognition
+FROM animcogn/face_recognition:cpu
 
 WORKDIR /app
 
