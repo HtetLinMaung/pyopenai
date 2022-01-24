@@ -29,8 +29,8 @@ def detect_faces():
 
         for url in faces:
             image = load_image_url(url)
-            face_location = face_recognition.face_locations(image, model=model)
-            data.append(face_location)
+            face_locations = face_recognition.face_locations(image, model=model)
+            data.append(face_locations)
 
         return {'code': 200, 'message': 'Detecting faces successful', 'data': data}
     except Exception as err:
@@ -67,10 +67,14 @@ def identify_faces():
                 results = face_recognition.compare_faces(known_encodings,
                                                          face_encoding,
                                                          tolerance=tolerance)
-                match = None
+
                 if True in results:
-                    match = known_labels[results.index(True)]
-                    data.append({'match': match, 'face_location': face_location})
+                    data.append({
+                        'match': known_labels[results.index(True)],
+                        'face_location': face_location,
+                        'top_left': (face_location[3], face_location[0]),
+                        'bottom_right': (face_location[1], face_location[2])
+                    })
 
         return {'code': 200, 'message': 'Identifying faces successful', 'data': data}
     except Exception as err:
@@ -79,4 +83,4 @@ def identify_faces():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=False)
+    app.run(host='0.0.0.0', port=9090, debug=True)
