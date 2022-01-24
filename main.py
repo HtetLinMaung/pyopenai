@@ -38,19 +38,63 @@ def detect_faces():
         return {'code': 500, 'message': 'Internal Server Error'}, 500
 
 
+known_encodings = []
+known_labels = []
+
+
+@app.route(f"{BASE_URL}/face-detector/load-known-faces", methods=['POST'])
+def load_known_faces():
+    try:
+        known_faces = request.json['known_faces']
+
+        print('clearing known faces')
+        known_encodings.clear()
+        known_labels.clear()
+
+        print('loading known faces')
+        for face in known_faces:
+            image = load_image_url(face['url'])
+            encoding = face_recognition.face_encodings(image)[0]
+            known_encodings.append(encoding)
+            known_labels.append(face['label'])
+
+        return {'code': 200, 'message': 'Adding faces successful'}
+    except Exception as err:
+        print(err)
+        return {'code': 500, 'message': 'Internal Server Error'}, 500
+
+
+@app.route(f"{BASE_URL}/face-detector/add-known-faces", methods=['POST'])
+def add_known_faces():
+    try:
+        known_faces = request.json['known_faces']
+
+        print('adding known faces')
+        for face in known_faces:
+            image = load_image_url(face['url'])
+            encoding = face_recognition.face_encodings(image)[0]
+            known_encodings.append(encoding)
+            known_labels.append(face['label'])
+
+        return {'code': 200, 'message': 'Adding faces successful'}
+    except Exception as err:
+        print(err)
+        return {'code': 500, 'message': 'Internal Server Error'}, 500
+
+
 @app.route(f"{BASE_URL}/face-detector/identify-faces", methods=['POST'])
 def identify_faces():
     try:
         data = []
-        known_encodings = []
-        known_labels = []
+        # known_encodings = []
+        # known_labels = []
 
         known_faces = request.json['known_faces']
         unknown_faces = request.json['unknown_faces']
         tolerance = request.json['tolerance']
         model = request.json['model']
 
-        print('loading known faces')
+        print('adding known faces')
         for face in known_faces:
             image = load_image_url(face['url'])
             encoding = face_recognition.face_encodings(image)[0]
