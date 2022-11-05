@@ -5,4 +5,4 @@ services:
     image: htetlinmaung/pyopenai
     build: .
     ports:
-      - "9090:80"
+      - "9091:80"
