@@ -1,1 +1,1 @@
-sudo docker-compose down && git pull && sudo docker image -f htetlinmaung/pyopenai && sudo docker-compose up -d
+sudo docker-compose down && git pull && sudo docker image rm -f htetlinmaung/pyopenai && sudo docker-compose up -d
