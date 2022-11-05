@@ -29,7 +29,8 @@ def detect_faces():
 
         for url in faces:
             image = load_image_url(url)
-            face_locations = face_recognition.face_locations(image, model=model)
+            face_locations = face_recognition.face_locations(
+                image, model=model)
             data.append(face_locations)
 
         return {'code': 200, 'message': 'Detecting faces successful', 'data': data}
@@ -58,7 +59,10 @@ def load_known_faces():
             known_encodings.append(encoding)
             known_labels.append(face['label'])
 
-        return {'code': 200, 'message': 'Adding faces successful'}
+        return {
+            'code': 200,
+            'message': 'Adding faces successful'
+        }
     except Exception as err:
         print(err)
         return {'code': 500, 'message': 'Internal Server Error'}, 500

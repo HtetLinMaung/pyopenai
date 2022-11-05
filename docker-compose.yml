@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  pyopenai:
+    image: htetlinmaung/pyopenai
+    build: .
+    ports:
+      - "9090:80"
